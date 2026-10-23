@@ -1,0 +1,55 @@
+/* Contain decorative artwork without changing section layouts or typography. */
+html { overflow-x: clip; }
+.menu-toggle, .menu-toggle[hidden] { display: none; }
+.case-load-status[hidden] { display: none; }
+.case-load-status {
+  padding: 14px 25px;
+  margin: 0;
+  border-bottom: 1px solid #b7a89a;
+  font-size: 12px;
+  line-height: 1.6;
+}
+.case-load-status button {
+  background: transparent;
+  border: 1px solid currentColor;
+  padding: 8px 12px;
+  margin-left: 10px;
+  color: inherit;
+  font: inherit;
+}
+@media (max-width: 600px) {
+  .site-header.menu-ready .menu-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    border: 1px solid #722f3740;
+    border-radius: 30px;
+    padding: 9px 12px;
+    margin-right: auto;
+    font: 11px 'DM Sans', Arial, sans-serif;
+  }
+  .site-header.menu-ready #main-navigation {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    width: 100%;
+    padding: 12px 6% 18px;
+    margin: 0;
+    background: var(--paper);
+    border-bottom: 1px solid #722f3740;
+    box-shadow: 0 12px 20px #211b1915;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+  }
+  .site-header.menu-ready.menu-open #main-navigation { display: flex; }
+  .site-header.menu-ready #main-navigation a { padding: 13px 0; font-size: 11px; }
+  html[data-theme="dark"] .site-header.menu-ready #main-navigation { background: #4a1528; }
+  html[data-theme="dark"] .site-header.menu-ready .menu-toggle {
+    color: #f3e8d7;
+    border-color: #d8be9466;
+  }
+}

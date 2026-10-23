@@ -1,0 +1,50 @@
+[
+  {
+    "id":"sovereign-pro","name":"Dialex Sovereign Pro","series":"Sovereign","category":"Flagship","tag":"Signature flagship","price":389000,"oldPrice":419000,"rating":4.9,"reviews":128,"popularity":98,"released":"2026-09-20","stock":18,
+    "colors":[{"name":"Sapphire Blue","body":"#183d79","frame":"#849fc5","accent":"#d9b97a"},{"name":"Platinum Silver","body":"#b9c5d4","frame":"#e2e7ed","accent":"#8eabc9"},{"name":"Onyx Black","body":"#272c35","frame":"#6f7885","accent":"#c6a66c"}],
+    "ram":[12,16],"storage":[256,512,1024],"cameraCount":3,"displaySize":6.8,"battery":5200,"cameraEmphasis":true,"isNew":true,"bestSeller":true,
+    "specs":{"chipset":"Dialex A1 flagship concept chip","display":"6.8-inch LTPO OLED","resolution":"3200 × 1440","refresh":"120 Hz adaptive","rearCameras":"50 MP main + 48 MP ultrawide + 64 MP telephoto","frontCamera":"32 MP","charging":"80 W wired / 30 W wireless","os":"Dialex OS concept, based on Android","connectivity":"5G, Wi-Fi 7, Bluetooth 5.4, NFC","materials":"Titanium-look frame, satin glass back","dimensions":"163.2 × 77.4 × 8.5 mm","weight":"218 g","waterResistance":"IP68 concept rating","warranty":"24-month limited demo warranty"}
+  },
+  {
+    "id":"aura","name":"Dialex Aura","series":"Aura","category":"Compact","tag":"Compact brilliance","price":219000,"rating":4.7,"reviews":86,"popularity":78,"released":"2026-06-18","stock":24,
+    "colors":[{"name":"Pearl White","body":"#d5dce5","frame":"#b6c5d2","accent":"#8eabc9"},{"name":"Rose Quartz","body":"#c9a2b5","frame":"#d9b8c4","accent":"#d7bb7b"},{"name":"Midnight Blue","body":"#1c355d","frame":"#8ca9c7","accent":"#b4c5dd"}],
+    "ram":[8,12],"storage":[128,256,512],"cameraCount":2,"displaySize":6.1,"battery":4400,"cameraEmphasis":false,"isNew":false,"bestSeller":true,
+    "specs":{"chipset":"Dialex A1 Lite concept chip","display":"6.1-inch OLED","resolution":"2400 × 1080","refresh":"120 Hz","rearCameras":"50 MP main + 12 MP ultrawide","frontCamera":"24 MP","charging":"65 W wired / 15 W wireless","os":"Dialex OS concept, based on Android","connectivity":"5G, Wi-Fi 6E, Bluetooth 5.3, NFC","materials":"Aluminum-look frame, frosted glass back","dimensions":"147.2 × 70.1 × 7.8 mm","weight":"172 g","waterResistance":"IP67 concept rating","warranty":"24-month limited demo warranty"}
+  },
+  {
+    "id":"fold","name":"Dialex Fold","series":"Fold","category":"Foldable","tag":"A wider world","price":549000,"rating":4.8,"reviews":61,"popularity":84,"released":"2026-09-12","stock":8,
+    "colors":[{"name":"Royal Violet","body":"#4a3d70","frame":"#a498c0","accent":"#d6bd83"},{"name":"Graphite","body":"#3c434e","frame":"#9aa7b7","accent":"#9cb2ce"}],
+    "ram":[12,16],"storage":[512,1024],"cameraCount":3,"displaySize":7.8,"battery":4900,"cameraEmphasis":true,"isNew":true,"bestSeller":false,
+    "specs":{"chipset":"Dialex A1 Fold concept chip","display":"7.8-inch folding LTPO OLED; 6.3-inch cover","resolution":"2160 × 1912 inner","refresh":"120 Hz adaptive","rearCameras":"50 MP main + 12 MP ultrawide + 10 MP telephoto","frontCamera":"10 MP inner / 10 MP cover","charging":"65 W wired / 15 W wireless","os":"Dialex OS concept, based on Android","connectivity":"5G, Wi-Fi 7, Bluetooth 5.4, NFC","materials":"Armor aluminum-look frame, glass back","dimensions":"153.1 × 132.0 × 5.9 mm open","weight":"245 g","waterResistance":"IPX8 concept rating","warranty":"24-month limited demo warranty"}
+  },
+  {
+    "id":"pulse","name":"Dialex Pulse","series":"Pulse","category":"Gaming","tag":"Made for momentum","price":279000,"rating":4.8,"reviews":112,"popularity":90,"released":"2026-07-08","stock":22,
+    "colors":[{"name":"Electric Violet","body":"#352a66","frame":"#745eb0","accent":"#9b7bed"},{"name":"Carbon Black","body":"#20242d","frame":"#697181","accent":"#37c3d5"}],
+    "ram":[12,16],"storage":[256,512],"cameraCount":3,"displaySize":6.78,"battery":6000,"cameraEmphasis":false,"isNew":false,"bestSeller":true,
+    "specs":{"chipset":"Dialex G1 gaming concept chip","display":"6.78-inch AMOLED","resolution":"2780 × 1264","refresh":"165 Hz","rearCameras":"50 MP main + 13 MP ultrawide + 5 MP macro","frontCamera":"16 MP","charging":"100 W wired","os":"Dialex OS concept, based on Android","connectivity":"5G, Wi-Fi 7, Bluetooth 5.4, NFC","materials":"Aluminum-look frame, etched glass back","dimensions":"164.1 × 76.8 × 8.9 mm","weight":"226 g","waterResistance":"IP54 concept rating","warranty":"24-month limited demo warranty"}
+  },
+  {
+    "id":"vision","name":"Dialex Vision","series":"Vision","category":"Camera","tag":"Every detail, considered","price":349000,"rating":4.9,"reviews":94,"popularity":89,"released":"2026-08-21","stock":12,
+    "colors":[{"name":"Deep Ocean","body":"#193e50","frame":"#7697a4","accent":"#d1b276"},{"name":"Porcelain","body":"#d1d0ca","frame":"#c5c8c7","accent":"#a78b60"}],
+    "ram":[12,16],"storage":[256,512,1024],"cameraCount":4,"displaySize":6.7,"battery":5100,"cameraEmphasis":true,"isNew":true,"bestSeller":false,
+    "specs":{"chipset":"Dialex A1 Imaging concept chip","display":"6.7-inch LTPO OLED","resolution":"3120 × 1440","refresh":"120 Hz adaptive","rearCameras":"50 MP main + 50 MP ultrawide + 50 MP portrait + 64 MP periscope","frontCamera":"32 MP","charging":"80 W wired / 30 W wireless","os":"Dialex OS concept, based on Android","connectivity":"5G, Wi-Fi 7, Bluetooth 5.4, NFC","materials":"Aluminum-look frame, ceramic-look back","dimensions":"162.2 × 75.9 × 8.6 mm","weight":"211 g","waterResistance":"IP68 concept rating","warranty":"24-month limited demo warranty"}
+  },
+  {
+    "id":"atelier","name":"Dialex Atelier","series":"Atelier","category":"Luxury","tag":"Crafted to be kept","price":459000,"rating":4.8,"reviews":47,"popularity":72,"released":"2026-09-02","stock":6,
+    "colors":[{"name":"Obsidian Gold","body":"#282725","frame":"#ae9060","accent":"#d9bb80"},{"name":"Royal Blue","body":"#253b66","frame":"#b7a27e","accent":"#e1c891"}],
+    "ram":[12,16],"storage":[512,1024],"cameraCount":3,"displaySize":6.7,"battery":5000,"cameraEmphasis":false,"isNew":true,"bestSeller":false,
+    "specs":{"chipset":"Dialex A1 flagship concept chip","display":"6.7-inch OLED","resolution":"2800 × 1260","refresh":"120 Hz","rearCameras":"50 MP main + 12 MP ultrawide + 50 MP telephoto","frontCamera":"32 MP","charging":"80 W wired / 30 W wireless","os":"Dialex OS concept, based on Android","connectivity":"5G, Wi-Fi 7, Bluetooth 5.4, NFC","materials":"Gold-tone metal frame, textured glass back","dimensions":"161.8 × 75.8 × 8.4 mm","weight":"214 g","waterResistance":"IP68 concept rating","warranty":"24-month limited demo warranty"}
+  },
+  {
+    "id":"edge","name":"Dialex Edge","series":"Edge","category":"Everyday","tag":"A lighter way forward","price":169000,"rating":4.6,"reviews":144,"popularity":93,"released":"2026-03-15","stock":37,
+    "colors":[{"name":"Ice Silver","body":"#b5c8d2","frame":"#c7d7df","accent":"#819eb4"},{"name":"Slate Blue","body":"#45627b","frame":"#8ea9bf","accent":"#b3c7d9"},{"name":"Charcoal","body":"#343a42","frame":"#7f8793","accent":"#b1bbca"}],
+    "ram":[8,12],"storage":[128,256],"cameraCount":2,"displaySize":6.5,"battery":5000,"cameraEmphasis":false,"isNew":false,"bestSeller":true,
+    "specs":{"chipset":"Dialex E1 concept chip","display":"6.5-inch AMOLED","resolution":"2400 × 1080","refresh":"120 Hz","rearCameras":"50 MP main + 8 MP ultrawide","frontCamera":"16 MP","charging":"45 W wired","os":"Dialex OS concept, based on Android","connectivity":"5G, Wi-Fi 6, Bluetooth 5.3, NFC","materials":"Aluminum-look frame, matte composite back","dimensions":"159.0 × 74.8 × 7.2 mm","weight":"181 g","waterResistance":"IP54 concept rating","warranty":"24-month limited demo warranty"}
+  },
+  {
+    "id":"note","name":"Dialex Note","series":"Note","category":"Business","tag":"Your ideas, in motion","price":259000,"rating":4.7,"reviews":73,"popularity":77,"released":"2026-05-10","stock":21,
+    "colors":[{"name":"Ink Blue","body":"#283b58","frame":"#8398b3","accent":"#d3b474"},{"name":"Graphite Gray","body":"#3d4652","frame":"#a2aeba","accent":"#bfccd7"}],
+    "ram":[12,16],"storage":[256,512],"cameraCount":3,"displaySize":6.9,"battery":5400,"cameraEmphasis":false,"isNew":false,"bestSeller":false,
+    "specs":{"chipset":"Dialex N1 productivity concept chip","display":"6.9-inch OLED","resolution":"2800 × 1260","refresh":"120 Hz","rearCameras":"50 MP main + 12 MP ultrawide + 10 MP telephoto","frontCamera":"24 MP","charging":"65 W wired / 15 W wireless","os":"Dialex OS concept, based on Android","connectivity":"5G, Wi-Fi 6E, Bluetooth 5.4, NFC","materials":"Aluminum-look frame, frosted glass back","dimensions":"166.1 × 78.0 × 8.2 mm","weight":"209 g","waterResistance":"IP67 concept rating","warranty":"24-month limited demo warranty"}
+  }
+]

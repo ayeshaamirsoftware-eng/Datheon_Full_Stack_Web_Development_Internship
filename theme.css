@@ -1,0 +1,207 @@
+/* Theme colors only. Keep the existing light palette and project artwork. */
+.appearance-controls { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+#theme-toggle {
+  background: transparent;
+  border: 1px solid #722f3740;
+  border-radius: 30px;
+  padding: 9px 14px;
+  font: 11px 'DM Sans', Arial, sans-serif;
+  white-space: nowrap;
+}
+#theme-toggle[hidden] { display: none; }
+@media (max-width: 600px) {
+  .appearance-controls { flex-direction: column; gap: 4px; }
+  .site-header #theme-toggle, .site-header .appearance-controls #motion-toggle {
+    font-size: 9px;
+    padding: 4px 10px;
+    margin: 0;
+  }
+}
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --theme-bg: #260f17;
+  --theme-panel: #3b1824;
+  --theme-inset: #30121d;
+  --theme-text: #f3e8d7;
+  --theme-muted: #d2b8bc;
+  --theme-accent: #e7a7b8;
+  --theme-line: #805563;
+}
+html[data-theme="dark"] body,
+html[data-theme="dark"] .site-header,
+html[data-theme="dark"] .expertise-section,
+html[data-theme="dark"] .work-section,
+html[data-theme="dark"] .skip {
+  background: var(--theme-bg);
+  color: var(--theme-text);
+}
+html[data-theme="dark"] .about-section,
+html[data-theme="dark"] .work-invitation,
+html[data-theme="dark"] .closing-strip,
+html[data-theme="dark"] .opening-loader {
+  background: #1d0b12;
+  color: var(--theme-text);
+}
+html[data-theme="dark"] .contact-section {
+  background: #4b1c2b;
+  color: var(--theme-text);
+}
+html[data-theme="dark"] .site-header nav a,
+html[data-theme="dark"] .hero-explore,
+html[data-theme="dark"] .title-sub .role-inner,
+html[data-theme="dark"] .period,
+html[data-theme="dark"] .about-copy h2 em,
+html[data-theme="dark"] .expertise-intro h2 em,
+html[data-theme="dark"] .expertise-item small,
+html[data-theme="dark"] .expertise-item:hover,
+html[data-theme="dark"] .expertise-item.active,
+html[data-theme="dark"] .work-heading h2 > span,
+html[data-theme="dark"] .project-top > span:first-child,
+html[data-theme="dark"] .project-links a,
+html[data-theme="dark"] .project-links button,
+html[data-theme="dark"] .invitation-copy h2 em,
+html[data-theme="dark"] .invitation-link span {
+  color: var(--theme-accent);
+}
+html[data-theme="dark"] .about-copy > p,
+html[data-theme="dark"] .expertise-intro > p,
+html[data-theme="dark"] .expertise-item em,
+html[data-theme="dark"] .expertise-note,
+html[data-theme="dark"] .section-meta,
+html[data-theme="dark"] .project-description h3 span,
+html[data-theme="dark"] .invitation-kicker,
+html[data-theme="dark"] .invitation-bottom p,
+html[data-theme="dark"] .contact-section h2 em {
+  color: var(--theme-muted);
+}
+html[data-theme="dark"] .expertise-item,
+html[data-theme="dark"] .section-meta,
+html[data-theme="dark"] .project-card,
+html[data-theme="dark"] .work-invitation,
+html[data-theme="dark"] .closing-strip,
+html[data-theme="dark"] .project-links a,
+html[data-theme="dark"] .project-links button,
+html[data-theme="dark"] #theme-toggle,
+html[data-theme="dark"] #motion-toggle {
+  border-color: var(--theme-line);
+}
+html[data-theme="dark"] .site-header nav a::after { background: var(--theme-accent); }
+html[data-theme="dark"] :focus-visible { outline-color: var(--theme-accent); }
+html[data-theme="dark"] ::selection { background: #8f3d52; color: #f3e8d7; }
+
+/* Case studies share the burgundy palette, including inputs and demo panels. */
+html[data-theme="dark"] .case-dialog,
+html[data-theme="dark"] .case-dialog .dialog-head,
+html[data-theme="dark"] .case-dialog .lab {
+  background: var(--theme-panel);
+  color: var(--theme-text);
+  border-color: var(--theme-line);
+}
+html[data-theme="dark"] .case-dialog .chapter-copy p,
+html[data-theme="dark"] .case-dialog .chapter h3 span,
+html[data-theme="dark"] .case-dialog .lab p,
+html[data-theme="dark"] .case-dialog .lab-top,
+html[data-theme="dark"] .case-dialog .lab .badge,
+html[data-theme="dark"] .case-dialog .goal-summary span,
+html[data-theme="dark"] .case-dialog .journal-actions > span,
+html[data-theme="dark"] .case-dialog .card-toolbar,
+html[data-theme="dark"] .case-dialog .quiz-navigation,
+html[data-theme="dark"] .case-dialog .viewer-tools,
+html[data-theme="dark"] .case-dialog .dialex #hotspot-info,
+html[data-theme="dark"] .case-dialog #phone-reset,
+html[data-theme="dark"] .case-dialog .goal-row.completed > span {
+  color: var(--theme-muted);
+}
+html[data-theme="dark"] .case-dialog .text-link,
+html[data-theme="dark"] .case-dialog .chapter-number,
+html[data-theme="dark"] .case-dialog .panel-heading .small-label,
+html[data-theme="dark"] .case-dialog .citation,
+html[data-theme="dark"] .case-dialog .priority output,
+html[data-theme="dark"] .case-dialog .job > span,
+html[data-theme="dark"] .case-dialog .goal-summary strong,
+html[data-theme="dark"] .case-dialog .saved-reflection small,
+html[data-theme="dark"] .case-dialog .quiz-result strong {
+  color: var(--theme-accent);
+}
+html[data-theme="dark"] .case-dialog textarea,
+html[data-theme="dark"] .case-dialog input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+html[data-theme="dark"] .case-dialog form select,
+html[data-theme="dark"] .case-dialog .job,
+html[data-theme="dark"] .case-dialog .question-tabs button,
+html[data-theme="dark"] .case-dialog .quiz-option {
+  background: var(--theme-inset);
+  color: var(--theme-text);
+  border-color: var(--theme-line);
+}
+html[data-theme="dark"] .case-dialog input,
+html[data-theme="dark"] .case-dialog textarea { accent-color: var(--theme-accent); }
+html[data-theme="dark"] .case-dialog textarea::placeholder,
+html[data-theme="dark"] .case-dialog input::placeholder { color: var(--theme-muted); opacity: 1; }
+html[data-theme="dark"] .case-dialog .saved-reflection,
+html[data-theme="dark"] .case-dialog .goal-summary,
+html[data-theme="dark"] .case-dialog .source-pane,
+html[data-theme="dark"] .case-dialog .revision-card.answer-side,
+html[data-theme="dark"] .case-dialog .quiz-explanation,
+html[data-theme="dark"] .case-dialog .quiz-result,
+html[data-theme="dark"] .case-dialog .quiz-option:has(input:checked) {
+  background: #4b2231;
+  color: var(--theme-text);
+  border-color: var(--theme-line);
+}
+html[data-theme="dark"] .case-dialog .demo-action,
+html[data-theme="dark"] .case-dialog .demo-tabs button[aria-selected="true"],
+html[data-theme="dark"] .case-dialog .journal-moods button[aria-pressed="true"],
+html[data-theme="dark"] .case-dialog .question-tabs button.active,
+html[data-theme="dark"] .case-dialog .revision-card:not(.answer-side) {
+  background: #8f3d52;
+  color: #fff7ee;
+  border-color: #b9788b;
+}
+html[data-theme="dark"] .case-dialog .demo-action:hover { background: #7b3044; }
+html[data-theme="dark"] .case-dialog .demo-tabs button { color: var(--theme-muted); }
+html[data-theme="dark"] .case-dialog .demo-tabs button[aria-selected="true"] { color: #fff7ee; }
+html[data-theme="dark"] .case-dialog .goal-progress,
+html[data-theme="dark"] .case-dialog .score-track { background: #68404f; }
+html[data-theme="dark"] .case-dialog .goal-progress > i,
+html[data-theme="dark"] .case-dialog .score-track > i { background: var(--theme-accent); }
+html[data-theme="dark"] .case-dialog .skills span,
+html[data-theme="dark"] .case-dialog .demo-tabs,
+html[data-theme="dark"] .case-dialog .journal-moods button,
+html[data-theme="dark"] .case-dialog .goal-row,
+html[data-theme="dark"] .case-dialog .evidence-grid,
+html[data-theme="dark"] .case-dialog .card-controls button,
+html[data-theme="dark"] .case-dialog .quiz-question,
+html[data-theme="dark"] .case-dialog .quiz-navigation button,
+html[data-theme="dark"] .case-dialog .receipt .total,
+html[data-theme="dark"] .case-dialog .close-case,
+html[data-theme="dark"] .case-dialog .badge { border-color: var(--theme-line); }
+html[data-theme="dark"] .case-dialog .source-pane.highlighted { box-shadow: 0 0 0 2px var(--theme-accent); }
+html[data-theme="dark"] .case-dialog textarea:focus,
+html[data-theme="dark"] .case-dialog input:focus { outline-color: var(--theme-accent); }
+
+/* Dark-mode cover: burgundy depth and a quiet champagne spotlight. */
+html[data-theme="dark"] .site-header {
+  background: #4a1528;
+}
+html[data-theme="dark"] .hero {
+  background:
+    radial-gradient(ellipse at 62% 38%, #d8be9424 0%, #d8be9400 60%),
+    linear-gradient(160deg, #4a1528 0%, #451326 38%, #260f17 100%);
+  color: #f3e8d7;
+}
+html[data-theme="dark"] .hero .title-sub .role-inner,
+html[data-theme="dark"] .hero .period,
+html[data-theme="dark"] .hero .hero-explore {
+  color: #d8be94;
+}
+html[data-theme="dark"] .site-header nav a {
+  color: #f3e8d7;
+}
+html[data-theme="dark"] .site-header nav a::after {
+  background: #d8be94;
+}
+html[data-theme="dark"] .site-header #theme-toggle,
+html[data-theme="dark"] .site-header #motion-toggle {
+  border-color: #d8be9466;
+}
