@@ -1,5 +1,12 @@
 # Ayesha Amir - Developer Portfolio
 
+## Datheon internship tasks
+
+- **Task 1 — Developer portfolio:** The repository root contains the responsive portfolio and project showcase.
+- **Task 2 — Dynamic task manager:** [REPSTER](task-2-repster/README.md) is a fitness-focused task manager. A workout session is a task with a category, due date, completion state, and editable exercise plan. The app provides create/read/update/delete actions, All/Active/Completed filters, quick search, completion animation, and browser localStorage persistence. It runs as a responsive static site with no server.
+
+To deploy Task 2 separately on Vercel, select `task-2-repster` as the project root and use its `dist` folder as the output directory. The two tasks have separate pages and deployment settings.
+
 A responsive personal portfolio with a warm ivory and burgundy identity, a burgundy-and-champagne dark-mode hero, and interactive previews of LifeOS, StudyCore, and Dialex.
 
 **Portfolio address:** https://ayesha-portfolio-3d.vercel.app/  
@@ -92,7 +99,7 @@ References: [Vercel deployment documentation](https://vercel.com/docs/deployment
 
 Includes the required portfolio content, responsive Grid/Flexbox layouts, a dark/light toggle, smooth scrolling with reduced-motion exceptions, project dialogs, mobile menu and this README.
 
-Final submission still requires a public source repository and a verified live deployment. Datheon requests the submission repository name Datheon_Full_Stack_Web_Development_Internship and multiple completed internship tasks; this repository content covers the portfolio task only.
+Datheon requests multiple completed internship tasks in the public Datheon_Full_Stack_Web_Development_Internship repository. Task 2 is documented above and in its own folder. Check the live deployment and repository contents before submitting the portal form.
 
 ## Credits
 
