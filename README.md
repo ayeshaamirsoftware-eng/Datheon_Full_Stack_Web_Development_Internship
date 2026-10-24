@@ -3,7 +3,7 @@
 ## Datheon internship tasks
 
 - **Task 1 — Developer portfolio:** The repository root contains the responsive portfolio and project showcase.
-- **Task 2 — Dynamic task manager:** [REPSTER](task-2-repster/README.md) is a fitness-focused task manager. A workout session is a task with a category, due date, completion state, and editable exercise plan. The app provides create/read/update/delete actions, All/Active/Completed filters, quick search, completion animation, and browser localStorage persistence. It runs as a responsive static site with no server.
+- **Task 2 — Dynamic task manager:** [REPSTER](task-2-repster/README.md) is a fitness-focused task manager. [Open the live app](https://repster.vercel.app/). A workout session is a task with a category, due date, completion state, and editable exercise plan. The app provides create/read/update/delete actions, All/Active/Completed filters, quick search, completion animation, and browser localStorage persistence. It runs as a responsive static site with no server.
 
 To deploy Task 2 separately on Vercel, select `task-2-repster` as the project root and use its `dist` folder as the output directory. The two tasks have separate pages and deployment settings.
 

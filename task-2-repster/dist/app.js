@@ -19,9 +19,9 @@
     return [{ name: 'Goblet squat', sets: 3, reps: 10, weight: '12 kg' }, { name: 'Dumbbell row', sets: 3, reps: 10, weight: '10 kg' }];
   };
   const sampleWorkouts = [
-    { id: id(), name: 'Lower body strength', category: 'Strength', date: addDays(0), duration: 45, done: true, exercises: presets('Strength') },
+    { id: id(), name: 'Lower body strength', category: 'Strength', date: addDays(-2), completionDate: addDays(-2), duration: 45, done: true, exercises: presets('Strength') },
     { id: id(), name: 'Easy outdoor run', category: 'Cardio', date: addDays(1), duration: 30, done: false, exercises: presets('Cardio') },
-    { id: id(), name: 'Mobility reset', category: 'Mobility', date: addDays(2), duration: 20, done: true, exercises: presets('Mobility') },
+    { id: id(), name: 'Mobility reset', category: 'Mobility', date: addDays(-1), completionDate: addDays(-1), duration: 20, done: true, exercises: presets('Mobility') },
     { id: id(), name: 'Upper body strength', category: 'Strength', date: addDays(3), duration: 45, done: false, exercises: presets('Strength') },
     { id: id(), name: 'Recovery walk', category: 'Recovery', date: addDays(4), duration: 25, done: false, exercises: presets('Recovery') }
   ];
@@ -34,8 +34,8 @@
   if (!Array.isArray(history)) history = [];
   if (firstVisit && localStorage.getItem(HISTORY_KEY) === null) {
     history = [
-      { name: 'Lower body strength', date: today(), sets: 6, volume: 660 },
-      { name: 'Mobility reset', date: today(), sets: 4, volume: 0 }
+      { name: 'Lower body strength', date: addDays(-2), sets: 6, volume: 660 },
+      { name: 'Mobility reset', date: addDays(-1), sets: 4, volume: 0 }
     ];
     write(HISTORY_KEY, history);
   }
@@ -71,7 +71,7 @@
   function renderSessions() {
     const search = $('#search').value.trim().toLowerCase();
     const list = workouts.filter(w => (filter === 'all' || (filter === 'active' ? !w.done : w.done)) && (!search || w.name.toLowerCase().includes(search) || w.category.toLowerCase().includes(search))).sort((a, b) => a.date.localeCompare(b.date));
-    $('#sessionList').innerHTML = list.length ? list.map((w, index) => `<article class="session ${w.done ? 'done' : ''}" style="animation-delay:${Math.min(index * 45, 270)}ms"><button class="session-check ${w.done ? 'checked' : ''}" type="button" data-complete="${escapeHTML(w.id)}" aria-label="${w.done ? 'Mark upcoming' : 'Mark complete'}: ${escapeHTML(w.name)}">${w.done ? '✓' : ''}</button><div class="session-info"><span class="session-category">${escapeHTML(w.category)}</span><div class="session-title">${escapeHTML(w.name)}</div><div class="session-meta">${dateLabel(w.date)} &nbsp;·&nbsp; ${Number(w.duration) || 0} min &nbsp;·&nbsp; ${w.exercises.length} exercises</div></div><div class="session-actions"><button class="start-action" type="button" data-start="${escapeHTML(w.id)}">${w.done ? 'Repeat' : 'Start'} ↗</button><button class="icon-action" type="button" data-edit="${escapeHTML(w.id)}" aria-label="Edit ${escapeHTML(w.name)}" title="Edit">✎</button><button class="icon-action" type="button" data-delete="${escapeHTML(w.id)}" aria-label="Delete ${escapeHTML(w.name)}" title="Delete">×</button></div></article>`).join('') : `<div class="empty-state"><strong>${search ? 'No matching sessions.' : 'Your next session starts here.'}</strong><p>${search ? 'Try another search.' : 'Add a session and make this week yours.'}</p>${search ? '' : '<button class="button button-primary" type="button" data-add>Add a session</button>'}</div>`;
+    $('#sessionList').innerHTML = list.length ? list.map((w, index) => `<article class="session ${w.done ? 'done' : ''}" style="animation-delay:${Math.min(index * 45, 270)}ms"><button class="session-check ${w.done ? 'checked' : ''}" type="button" data-complete="${escapeHTML(w.id)}" aria-label="${w.done ? 'Mark upcoming' : 'Mark complete'}: ${escapeHTML(w.name)}">${w.done ? '✓' : ''}</button><div class="session-info"><span class="session-category">${escapeHTML(w.category)}</span><div class="session-title">${escapeHTML(w.name)}</div><div class="session-meta">${dateLabel(w.date)} &nbsp;·&nbsp; ${Number(w.duration) || 0} min &nbsp;·&nbsp; ${w.exercises.length} ${w.exercises.length === 1 ? 'exercise' : 'exercises'}</div></div><div class="session-actions"><button class="start-action" type="button" data-start="${escapeHTML(w.id)}">${w.done ? 'Repeat' : 'Start'} ↗</button><button class="icon-action" type="button" data-edit="${escapeHTML(w.id)}" aria-label="Edit ${escapeHTML(w.name)}" title="Edit">✎</button><button class="icon-action" type="button" data-delete="${escapeHTML(w.id)}" aria-label="Delete ${escapeHTML(w.name)}" title="Delete">×</button></div></article>`).join('') : `<div class="empty-state"><strong>${search ? 'No matching sessions.' : 'Your next session starts here.'}</strong><p>${search ? 'Try another search.' : 'Add a session and make this week yours.'}</p>${search ? '' : '<button class="button button-primary" type="button" data-add>Add a session</button>'}</div>`;
   }
 
   function renderSummary() {
@@ -93,7 +93,7 @@
     const weekStart = new Date();
     weekStart.setDate(weekStart.getDate() - ((weekStart.getDay() + 6) % 7));
     weekStart.setHours(0, 0, 0, 0);
-    const completed = workouts.filter(w => w.done && new Date(`${w.date}T12:00:00`) >= weekStart).length;
+    const completed = workouts.filter(w => w.done && new Date(`${w.completionDate || w.date}T12:00:00`) >= weekStart).length;
     $('#goalCount').textContent = String(completed);
     $('#goalTotal').textContent = `/ ${goal}`;
     $('#goalProgress').style.width = `${Math.min(100, completed / goal * 100)}%`;
@@ -170,7 +170,7 @@
     if (button.hasAttribute('data-add')) return openEditor();
     if (button.dataset.start) return startWorkout(button.dataset.start);
     if (button.dataset.edit) return openEditor(button.dataset.edit);
-    if (button.dataset.complete) { const workout = workouts.find(w => w.id === button.dataset.complete); if (!workout) return; workout.done = !workout.done; save(); notice(workout.done ? 'Session complete. You showed up.' : 'Session moved to upcoming.'); return; }
+    if (button.dataset.complete) { const workout = workouts.find(w => w.id === button.dataset.complete); if (!workout) return; workout.done = !workout.done; workout.completionDate = workout.done ? today() : undefined; save(); notice(workout.done ? 'Session complete. You showed up.' : 'Session moved to active.'); return; }
     if (button.dataset.delete) { const workout = workouts.find(w => w.id === button.dataset.delete); if (!workout || !confirm(`Delete “${workout.name}”?`)) return; workouts = workouts.filter(w => w.id !== workout.id); localStorage.removeItem(`repster-active-${workout.id}`); save(); notice('Session deleted.'); }
   });
   $('#closeEditor').addEventListener('click', () => $('#editor').close());
@@ -179,7 +179,7 @@
     event.preventDefault();
     const workoutId = $('#editId').value;
     const previous = workouts.find(w => w.id === workoutId);
-    const item = { id: previous?.id || id(), name: $('#sessionName').value.trim(), category: $('#category').value, date: $('#sessionDate').value, duration: Number($('#duration').value), done: previous?.done || false, exercises: parseExercises($('#exercisePlan').value, $('#category').value) };
+    const item = { id: previous?.id || id(), name: $('#sessionName').value.trim(), category: $('#category').value, date: $('#sessionDate').value, duration: Number($('#duration').value), done: previous?.done || false, completionDate: previous?.completionDate, exercises: parseExercises($('#exercisePlan').value, $('#category').value) };
     if (!item.name) return;
     if (previous) workouts = workouts.map(w => w.id === workoutId ? item : w); else workouts.push(item);
     $('#editor').close(); save(); notice(previous ? 'Session updated.' : 'Session added. Let’s get to work.');
@@ -203,6 +203,7 @@
     let volume = 0;
     workout.exercises.forEach((ex, exIndex) => { const load = Number(String(ex.weight).match(/[\d.]+/)?.[0]) || 0; for (let setIndex = 0; setIndex < Number(ex.sets); setIndex++) if (checks[`${exIndex}-${setIndex}`]) volume += load * Number(ex.reps); });
     workout.done = true;
+    workout.completionDate = today();
     history.unshift({ name: workout.name, date: today(), sets: checked, volume: Math.round(volume) });
     history = history.slice(0, 100); write(HISTORY_KEY, history);
     localStorage.removeItem(`repster-active-${activeId}`);

@@ -1,5 +1,7 @@
 # REPSTER — Built one rep at a time
 
+**Live demo:** https://repster.vercel.app/
+
 A responsive strength-training planner built with HTML, CSS, and vanilla JavaScript. Open `dist/index.html` to use it; there is no build step or account.
 
 Plan sessions with exercises, sets, reps, and weights. In workout mode, check off sets, run a 60-second rest timer, and save the completed session to training history. A weekly target and light/dark theme help make progress visible. Workouts, set progress, history, target, and theme are stored in the browser on this device. A fresh browser starts with sample sessions so the full interface can be explored.
