@@ -18,10 +18,12 @@
     catch { storageWarning = 'Browser storage is unavailable, so changes may not remain after you close this page.'; return false; }
   };
   const read = (key, fallback) => {
+    let value = null;
     try {
-      const value = getStored(key);
+      value = getStored(key);
       return value === null ? fallback : JSON.parse(value);
     } catch {
+      if (key === THEME_KEY && (value === 'light' || value === 'dark')) return value;
       storageWarning = 'Some saved data could not be read. REPSTER opened safely with the data it could recover.';
       return fallback;
     }
