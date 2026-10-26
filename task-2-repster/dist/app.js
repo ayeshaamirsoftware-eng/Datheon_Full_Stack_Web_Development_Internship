@@ -38,6 +38,53 @@
     }
   };
   const id = () => (crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random().toString(36).slice(2)}`);
+  const CARDIO_EXERCISES = new Set(['Walking', 'Running', 'Easy pace', 'Cool down', 'Recovery walk']);
+  const EXERCISE_TIPS = {
+    'Squat': 'Keep your chest tall and let your knees follow the direction of your toes.',
+    'Goblet squat': 'Hold the weight close to your chest and sit down between your hips.',
+    'Leg press': 'Keep your back supported and avoid locking your knees at the top.',
+    'Deadlift': 'Keep the weight close and push the floor away with a neutral back.',
+    'Romanian deadlift': 'Push your hips back and stop when your hamstrings feel a comfortable stretch.',
+    'Bench press': 'Keep your feet planted and lower the weight with control.',
+    'Chest press': 'Keep your shoulders supported and press without locking your elbows.',
+    'Shoulder press': 'Brace your body and press upward without leaning back.',
+    'Lat pulldown': 'Pull toward your upper chest while keeping your shoulders down.',
+    'Seated row': 'Sit tall and pull your elbows back without shrugging.',
+    'Dumbbell row': 'Keep your back steady and pull the weight toward your hip.',
+    'Bicep curl': 'Keep your elbows near your sides and avoid swinging.',
+    'Tricep pushdown': 'Keep your elbows still and straighten your arms with control.',
+    'Walking': 'Choose a pace where you can still speak in short sentences.',
+    'Running': 'Start comfortably and slow down if your form or breathing becomes difficult.',
+    'Easy pace': 'Move at a pace where you can still speak in short sentences.',
+    'Cool down': 'Slow your pace gradually and let your breathing settle.',
+    'Recovery walk': 'Keep the pace easy and focus on relaxed, steady movement.'
+  };
+  const STARTER_TEMPLATES = {
+    full: { name: 'Beginner full body', duration: 35, exercises: [
+      { name: 'Goblet squat', sets: 3, reps: 10, weight: '0 kg', mode: 'strength' },
+      { name: 'Chest press', sets: 3, reps: 10, weight: '0 kg', mode: 'strength' },
+      { name: 'Lat pulldown', sets: 3, reps: 10, weight: '0 kg', mode: 'strength' }
+    ] },
+    upper: { name: 'Beginner upper body', duration: 35, exercises: [
+      { name: 'Chest press', sets: 3, reps: 10, weight: '0 kg', mode: 'strength' },
+      { name: 'Lat pulldown', sets: 3, reps: 10, weight: '0 kg', mode: 'strength' },
+      { name: 'Shoulder press', sets: 2, reps: 10, weight: '0 kg', mode: 'strength' }
+    ] },
+    lower: { name: 'Beginner lower body', duration: 35, exercises: [
+      { name: 'Goblet squat', sets: 3, reps: 10, weight: '0 kg', mode: 'strength' },
+      { name: 'Leg press', sets: 3, reps: 10, weight: '0 kg', mode: 'strength' },
+      { name: 'Romanian deadlift', sets: 2, reps: 10, weight: '0 kg', mode: 'strength' }
+    ] }
+  };
+  const isCardioExercise = (exercise) => exercise?.mode === 'cardio' || CARDIO_EXERCISES.has(exercise?.name) || /minutes?/i.test(String(exercise?.weight || ''));
+  const exerciseTip = (name) => EXERCISE_TIPS[name] || 'Use a comfortable range of motion and stop if something feels painful.';
+  const exerciseTarget = (exercise) => {
+    if (isCardioExercise(exercise)) {
+      const distance = Number(String(exercise.weight).match(/[\d.]+/)?.[0]) || 0;
+      return `${Number(exercise.reps) || 1} min${distance > 0 ? ` · ${distance} km` : ''}`;
+    }
+    return `${Number(exercise.sets)} ${Number(exercise.sets) === 1 ? 'set' : 'sets'} · ${Number(exercise.reps)} reps · ${exercise.weight}`;
+  };
   let workouts = read(WORKOUT_KEY, []);
   if (!Array.isArray(workouts)) {
     storageWarning = 'Your saved workout list was not in a usable format, so REPSTER opened a clean list safely.';
@@ -55,7 +102,8 @@
       name: String(exercise.name || 'Exercise'),
       sets: Math.max(1, Math.min(12, Number(exercise.sets) || 1)),
       reps: Math.max(1, Math.min(100, Number(exercise.reps) || 1)),
-      weight: String(exercise.weight ?? '0 kg')
+      weight: String(exercise.weight ?? '0 kg'),
+      mode: exercise.mode === 'cardio' || workout.category === 'Cardio' || CARDIO_EXERCISES.has(exercise.name) || /minutes?/i.test(String(exercise.weight || '')) ? 'cardio' : 'strength'
     })) : []
   }));
   let history = read(HISTORY_KEY, []);
@@ -148,7 +196,7 @@
   }
 
   function renderHistory() {
-    $('#historyList').innerHTML = history.length ? history.slice(0, 4).map(item => `<div class="history-item"><strong>${escapeHTML(item.name)}</strong><span>${dateLabel(item.date)} · ${Number(item.sets) || 0} sets</span></div>`).join('') : '<p class="history-empty">Finish a workout to start your training log.</p>';
+    $('#historyList').innerHTML = history.length ? history.slice(0, 4).map(item => `<div class="history-item"><strong>${escapeHTML(item.name)}</strong><span>${dateLabel(item.date)} · ${Number(item.sets) || 0} ${escapeHTML(item.unit || 'sets')}</span></div>`).join('') : '<p class="history-empty">Finish a workout to start your training log.</p>';
     const volume = history.reduce((sum, item) => sum + (Number(item.volume) || 0), 0);
     $('#loadVolume').textContent = `${volume.toLocaleString()} kg`;
   }
@@ -156,7 +204,7 @@
   function render() { renderWeek(); renderSessions(); renderSummary(); renderGoal(); renderHistory(); }
 
   function renderEditorExercises() {
-    $('#plannedExercises').innerHTML = editorExercises.length ? editorExercises.map((exercise, index) => `<div class="planned-exercise"><span>${index + 1}</span><div><strong>${escapeHTML(exercise.name)}</strong><small>${Number(exercise.sets)} ${Number(exercise.sets) === 1 ? 'set' : 'sets'} · ${Number(exercise.reps)} reps · ${escapeHTML(exercise.weight)}</small></div><div class="exercise-actions"><button type="button" data-move-up="${index}" aria-label="Move ${escapeHTML(exercise.name)} up" ${index === 0 ? 'disabled' : ''}>↑</button><button type="button" data-move-down="${index}" aria-label="Move ${escapeHTML(exercise.name)} down" ${index === editorExercises.length - 1 ? 'disabled' : ''}>↓</button><button class="exercise-delete" type="button" data-delete-exercise="${index}" aria-label="Delete ${escapeHTML(exercise.name)}">Delete</button></div></div>`).join('') : '<p class="exercise-empty">No exercises added yet. Add your first exercise below.</p>';
+    $('#plannedExercises').innerHTML = editorExercises.length ? editorExercises.map((exercise, index) => `<div class="planned-exercise"><span>${index + 1}</span><div><strong>${escapeHTML(exercise.name)}</strong><small>${escapeHTML(exerciseTarget(exercise))}</small></div><div class="exercise-actions"><button type="button" data-move-up="${index}" aria-label="Move ${escapeHTML(exercise.name)} up" ${index === 0 ? 'disabled' : ''}>Move up</button><button type="button" data-move-down="${index}" aria-label="Move ${escapeHTML(exercise.name)} down" ${index === editorExercises.length - 1 ? 'disabled' : ''}>Move down</button><button class="exercise-delete" type="button" data-delete-exercise="${index}" aria-label="Delete ${escapeHTML(exercise.name)}">Delete</button></div></div>`).join('') : '<p class="exercise-empty">No exercises yet. Add one yourself or choose a starter plan above.</p>';
   }
 
   function setFieldError(errorId, message, input) {
@@ -173,8 +221,22 @@
     $('#exerciseSetsInput').value = '3';
     $('#exerciseRepsInput').value = '10';
     $('#exerciseWeightInput').value = '0';
+    updateExerciseFields('');
     $('#exerciseFormError').hidden = true;
     $('#exerciseFormError').textContent = '';
+  }
+
+  function updateExerciseFields(name) {
+    const cardio = CARDIO_EXERCISES.has(name) || (name === 'Other' && $('#category').value === 'Cardio');
+    $('#exerciseSetsLabel').hidden = cardio;
+    $('#repsLabelText').textContent = cardio ? 'Duration' : 'Reps';
+    $('#weightLabelText').textContent = cardio ? 'Distance' : 'Weight';
+    $('#weightUnit').textContent = cardio ? 'km' : 'kg';
+    $('#exerciseRepsInput').value = cardio ? '20' : '10';
+    $('#exerciseSetsInput').value = cardio ? '1' : '3';
+    $('#exerciseFormHint').textContent = cardio ? 'Start with a comfortable duration. Distance is optional.' : 'A common starting point is 3 sets of 10 reps. Use 0 kg for bodyweight.';
+    $('#exerciseTip').textContent = name ? exerciseTip(name) : 'Choose an exercise to see a simple form tip.';
+    $('.exercise-numbers').classList.toggle('cardio-fields', cardio);
   }
 
   function closeExerciseForm() {
@@ -208,6 +270,7 @@
     $('#category').value = workout?.category || 'Strength';
     $('#sessionDate').value = workout?.date || date || today();
     $('#duration').value = workout?.duration || 45;
+    $('#starterTemplates').hidden = Boolean(workout);
     editorExercises = workout ? workout.exercises.map(exercise => ({ ...exercise })) : [];
     renderEditorExercises();
     closeExerciseForm();
@@ -231,10 +294,11 @@
     const total = workout.exercises.length;
     const totalSets = Math.max(1, Math.min(12, Number(exercise.sets) || 1));
     $('#runnerTitle').textContent = workout.name;
-    $('#runnerMeta').textContent = `${Number(workout.duration) || 0} min planned · Take it one set at a time`;
+    $('#runnerMeta').textContent = `${Number(workout.duration) || 0} min planned · Take it one step at a time`;
     $('#exercisePosition').textContent = `Exercise ${activeExerciseIndex + 1} of ${total}`;
     $('#runnerProgress').style.width = `${activeExerciseIndex / total * 100}%`;
-    $('#exerciseSets').innerHTML = `<article class="runner-exercise"><div class="runner-exercise-heading"><div><span>NOW TRAINING</span><h3>${escapeHTML(exercise.name)}</h3></div><p>${Number(exercise.sets)} ${Number(exercise.sets) === 1 ? 'set' : 'sets'} · ${Number(exercise.reps)} reps · ${escapeHTML(exercise.weight)}</p></div><fieldset class="set-checklist"><legend>Check each set when you finish it</legend>${Array.from({ length: totalSets }, (_, setIndex) => { const key = setKey(activeExerciseIndex, setIndex); return `<label class="set-check ${checks[key] ? 'checked' : ''}"><input type="checkbox" data-set="${key}" ${checks[key] ? 'checked' : ''}><span><strong>Set ${setIndex + 1}</strong><small>${Number(exercise.reps)} reps · ${escapeHTML(exercise.weight)}</small></span><b aria-hidden="true">${checks[key] ? '✓' : ''}</b></label>`; }).join('')}</fieldset></article>`;
+    const cardio = isCardioExercise(exercise);
+    $('#exerciseSets').innerHTML = `<article class="runner-exercise"><div class="runner-exercise-heading"><div><span>NOW TRAINING</span><h3>${escapeHTML(exercise.name)}</h3></div><p>${escapeHTML(exerciseTarget(exercise))}</p></div><p class="movement-tip"><strong>Form tip</strong>${escapeHTML(exerciseTip(exercise.name))}</p><fieldset class="set-checklist"><legend>${cardio ? 'Check it when you finish' : 'Check each set when you finish it'}</legend>${Array.from({ length: totalSets }, (_, setIndex) => { const key = setKey(activeExerciseIndex, setIndex); return `<label class="set-check ${checks[key] ? 'checked' : ''}"><input type="checkbox" data-set="${key}" ${checks[key] ? 'checked' : ''}><span><strong>${cardio ? 'Activity complete' : `Set ${setIndex + 1}`}</strong><small>${escapeHTML(cardio ? exerciseTarget(exercise) : `${Number(exercise.reps)} reps · ${exercise.weight}`)}</small></span><b aria-hidden="true">${checks[key] ? '✓' : ''}</b></label>`; }).join('')}</fieldset></article>`;
     $('#nextExercise').disabled = !exerciseComplete(workout, activeExerciseIndex);
     $('#nextExercise').textContent = activeExerciseIndex === total - 1 ? 'Complete workout' : 'Next exercise';
   }
@@ -265,7 +329,7 @@
     let volume = 0;
     let completedSets = 0;
     workout.exercises.forEach((exercise, exerciseIndex) => {
-      const load = Number(String(exercise.weight).match(/[\d.]+/)?.[0]) || 0;
+      const load = isCardioExercise(exercise) ? 0 : Number(String(exercise.weight).match(/[\d.]+/)?.[0]) || 0;
       const totalSets = Math.max(1, Math.min(12, Number(exercise.sets) || 1));
       for (let setIndex = 0; setIndex < totalSets; setIndex++) {
         if (!checks[setKey(exerciseIndex, setIndex)]) continue;
@@ -275,7 +339,8 @@
     });
     workout.done = true;
     workout.completionDate = today();
-    history.unshift({ id: id(), workoutId: workout.id, name: workout.name, date: today(), sets: completedSets, volume: Math.round(volume) });
+    const cardioOnly = workout.exercises.every(isCardioExercise);
+    history.unshift({ id: id(), workoutId: workout.id, name: workout.name, date: today(), sets: completedSets, unit: cardioOnly ? (completedSets === 1 ? 'activity' : 'activities') : 'sets', volume: cardioOnly ? 0 : Math.round(volume) });
     history = history.slice(0, 100);
     write(HISTORY_KEY, history);
     removeStored(`repster-active-${activeId}`);
@@ -283,11 +348,11 @@
     runnerFinished = true;
     $('#runnerProgress').style.width = '100%';
     $('#exercisePosition').textContent = 'Workout complete';
-    $('#exerciseSets').innerHTML = `<div class="workout-complete"><span aria-hidden="true">✓</span><h3>You finished the workout.</h3><p>${completedSets} ${completedSets === 1 ? 'set' : 'sets'} logged. Good work showing up today.</p></div>`;
+    $('#exerciseSets').innerHTML = `<div class="workout-complete"><span aria-hidden="true">✓</span><h3>You finished the workout.</h3><p>Your work is saved. Rest, hydrate, and return when you are ready for the next one.</p></div>`;
     $('.runner-tools').hidden = true;
     $('#saveForLater').hidden = true;
     $('#nextExercise').disabled = false;
-    $('#nextExercise').textContent = 'Close';
+    $('#nextExercise').textContent = 'Return to workouts';
   }
 
   document.body.classList.toggle('light', read(THEME_KEY, 'dark') === 'light');
@@ -349,6 +414,20 @@
     form.hidden = false;
     $('#exerciseName').focus();
   });
+  $('#starterTemplates').addEventListener('click', event => {
+    const button = event.target.closest('[data-template]');
+    if (!button) return;
+    const template = STARTER_TEMPLATES[button.dataset.template];
+    if (!template) return;
+    $('#sessionName').value = template.name;
+    $('#category').value = 'Strength';
+    $('#duration').value = String(template.duration);
+    editorExercises = template.exercises.map(exercise => ({ ...exercise }));
+    renderEditorExercises();
+    setFieldError('#sessionNameError', '', $('#sessionName'));
+    setFieldError('#workoutExercisesError', '');
+    notice(`${template.name} is ready. Change anything you need, then save it.`);
+  });
   $('#sessionName').addEventListener('input', () => setFieldError('#sessionNameError', '', $('#sessionName')));
   $('#cancelExercise').addEventListener('click', closeExerciseForm);
   $('#plannedExercises').addEventListener('click', event => {
@@ -381,7 +460,12 @@
   $('#exerciseName').addEventListener('change', event => {
     const other = event.target.value === 'Other';
     $('#customExerciseLabel').hidden = !other;
+    updateExerciseFields(event.target.value);
+    if (CARDIO_EXERCISES.has(event.target.value) && !editorExercises.length) $('#category').value = 'Cardio';
     if (other) $('#customExerciseName').focus();
+  });
+  $('#category').addEventListener('change', () => {
+    if ($('#exerciseName').value === 'Other') updateExerciseFields('Other');
   });
   $('#addExercise').addEventListener('click', () => {
     const selected = $('#exerciseName').value;
@@ -392,10 +476,11 @@
       error.hidden = false;
       return;
     }
-    const sets = Math.max(1, Math.min(12, Number($('#exerciseSetsInput').value) || 1));
+    const cardio = CARDIO_EXERCISES.has(selected) || (selected === 'Other' && $('#category').value === 'Cardio');
+    const sets = cardio ? 1 : Math.max(1, Math.min(12, Number($('#exerciseSetsInput').value) || 1));
     const reps = Math.max(1, Math.min(100, Number($('#exerciseRepsInput').value) || 1));
     const weight = Math.max(0, Math.min(1000, Number($('#exerciseWeightInput').value) || 0));
-    editorExercises.push({ name: name.slice(0, 80), sets, reps, weight: `${weight} kg` });
+    editorExercises.push({ name: name.slice(0, 80), sets, reps, weight: `${weight} ${cardio ? 'km' : 'kg'}`, mode: cardio ? 'cardio' : 'strength' });
     renderEditorExercises();
     setFieldError('#workoutExercisesError', '');
     closeExerciseForm();
